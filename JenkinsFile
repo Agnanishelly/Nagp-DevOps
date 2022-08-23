@@ -57,12 +57,8 @@ pipeline {
                 if (env.BRANCH_NAME == 'master') {
                     sh 'gcloud auth activate-service-account --project=nagp-devops-cluster --key-file=/home/ubuntu/gcloudfile/nagp-devops-cluster-7565f6a5d9e4.json'
                     sh 'gcloud container clusters get-credentials cluster-1 --zone us-central1-c --project nagp-devops-cluster'
-                    sh 'kubectl apply -f MasterDeployment.yml --namespace=master'
+                    sh 'kubectl apply -f MasterDeploymentFile.yml --namespace=master'
 
-                }  else if (env.BRANCH_NAME == 'develop') {
-                    sh 'gcloud auth activate-service-account --project=nagp-devops-cluster --key-file=/home/ubuntu/gcloudfile/nagp-devops-cluster-7565f6a5d9e4.json'
-                    sh 'gcloud container clusters get-credentials cluster-1 --zone us-central1-c --project nagp-devops-cluster'
-                    sh 'kubectl apply -f DevelopDeployment.yml --namespace=develop'
                 }
             }
         }
