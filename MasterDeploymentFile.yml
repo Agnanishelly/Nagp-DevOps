@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nagpdevopsmaster-deployment   
+spec:
+  selector:
+    matchLabels:
+      app: nagpdevopsmaster-pod
+  replicas: 4
+  template:
+    metadata:
+      labels:
+        app: nagpdevopsmaster-pod
+    spec:
+      containers:
+        - name: nagpdevopsmaster-container
+          image: agnanishelly/i-shellymehrotra-master:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+              hostPort: 80
+              protocol: TCP
+--- 
+apiVersion: v1
+kind: Service
+metadata:
+    name: nagpdevopsmaster-service
+spec:
+    ports:
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: 80
+
+    selector:
+        app: nagpdevopsmaster-pod
+    type: LoadBalancer
+
+---
+
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mastersecret
+type: Opaque
+data:
+  branch: U2VjcmV0IGZyb20gbWFzdGVyIGJyYW5jaA==
+
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: master-configmap
+data:
+  branch: "Secret from master branch"
