@@ -47,7 +47,7 @@ pipeline {
       stage('Release Artifact') {
         when { anyOf { branch 'develop' } }
         steps {
-          sh 'dotnet publis -c Release'
+          sh 'dotnet publish -c Release'
         }
       }
       stage('Kubernetes Deployment') {
