@@ -1,39 +1,35 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nagpdevopsmaster-deployment   
+  name: nagpdevelop-deployment
 spec:
   selector:
     matchLabels:
-      app: nagpdevopsmaster-pod
+      app: nagpdevelop-pod
   replicas: 4
   template:
     metadata:
       labels:
-        app: nagpdevopsmaster-pod
+        app: nagpdevelop-pod
     spec:
       containers:
-        - name: nagpdevopsmaster-container
-          image: agnanishelly/i-shellymehrotra-master:latest
+        - name: nagpdevelop-container
+          image: agnanishelly/i-shellymehrotra-develop:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 80
-              hostPort: 80
-              protocol: TCP
 --- 
 apiVersion: v1
 kind: Service
 metadata:
-    name: nagpdevopsmaster-service
+    name: nagpdevelop-service
 spec:
     ports:
     - name: http
       port: 80
-      protocol: TCP
       targetPort: 80
-
     selector:
-        app: nagpdevopsmaster-pod
+        app: nagpdevelop-pod
     type: LoadBalancer
 
 ---
@@ -41,16 +37,16 @@ spec:
 apiVersion: v1
 kind: Secret
 metadata:
-  name: mastersecret
+  name: developsecret
 type: Opaque
 data:
-  branch: U2VjcmV0IGZyb20gbWFzdGVyIGJyYW5jaA==
+  branch: c2VjcmV0IGZyb20gZGV2ZWxvcCBicmFuY2g=
 
 ---
 
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: master-configmap
+  name: develop-configmap
 data:
-  branch: "Secret from master branch"
+  branch: "secret from develop branch"
