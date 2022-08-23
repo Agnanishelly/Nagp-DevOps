@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: nagpmaster-container
-          image: agnanishelly/i-shellymehrotra:latest
+          image: agnanishelly/i-shellymehrotra-master:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 7005
